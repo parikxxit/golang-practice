@@ -23,7 +23,7 @@ func githubInfo(login string) (string, int, error) {
 		return "", 0, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return "", 0, errors.New("Not ok status code")
+		return "", 0, errors.New("not ok status code")
 	}
 	var r Replay
 	dec := json.NewDecoder(resp.Body)
