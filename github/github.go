@@ -2,29 +2,35 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 )
 
 func main() {
-	resp, err := http.Get("https://api.github.com/users/parikxxit")
+	user, repos, err := githubInfo("parikxxit")
 	if err != nil {
-		log.Fatalf("error: %s", err)
+		log.Fatalf("got error: %s", err)
 	}
+	fmt.Printf("Username: %s, repos: %d\n", user, repos)
+}
 
-	if resp.StatusCode != http.StatusOK {
-		log.Fatalf("error := %s", resp.StatusCode)
+func githubInfo(login string) (string, int, error) {
+	URL := fmt.Sprintf("https://api.github.com/users/%s", login)
+	resp, err := http.Get(URL)
+	if err != nil {
+		return "", 0, err
 	}
-	// if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
-	// log.Fatalf("error: cant copy %s", err)
-	// }
+	if resp.StatusCode != http.StatusOK {
+		return "", 0, errors.New("Not ok status code")
+	}
 	var r Replay
 	dec := json.NewDecoder(resp.Body)
 	if err := dec.Decode(&r); err != nil {
 		log.Fatalf("Unabl decode %s", err)
 	}
-	fmt.Printf("%#v\n", r)
+	return r.Name, r.Public_Repos, nil
 }
 
 type Replay struct {
