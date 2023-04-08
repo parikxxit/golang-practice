@@ -91,3 +91,11 @@ encoding/JSON API
 - to group the interface we need to be explicit i.e if interface is implemented via pointer sematinc grouping will going to have pointer value if implemented via value semantics we need to group it as value not by referance 
 
 - There is a rule of thum in go accepts interfaces and return types not always applied but yeah
+
+- In go we can write a method to a type which represents a string representation of type that can be done using syntax func (t type) String() string{...}
+
+- Stringer interface implemented by stirng is the reason for the above way of representation
+
+- go's ``` staticcheck ``` and ``` go vet ``` use to do the code analysis
+
+- go test run go vet before running go test 
