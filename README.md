@@ -18,3 +18,29 @@ to fix the formatting bug we can utf8 package RuneCountInString methdo to count 
 Use #v while logging/debugging as it mention its type Ex: fmt.Print("#%v) it will log value with type ex: "1" for string instead of 1 
 
 If we are doing a string operation which need to access index convert that string to rune and return  string its a good practice
+
+## Calling rest API and working with JSON
+
+- Http header is of type http.Header which is a map we are not directly using go's map coz http header can be case insensetive
+
+- log.Fatalf is equivalent to log.Printf() && os.Exit(1)  
+
+- serialization is a process of converting type to bytes and deserialization is process to taking byte and converting it into server side type it is also known as marshelling and unmarshalling respectively, most common serialization and deserialization method is JSON other example are XML, protobuff etc.
+
+### JSON <-> GO type conversion
+
+- true/false -> true/false
+- string -> string
+- null -> nil
+- number -> float64(by default), float32, int64, int32, int8, uint8...
+- array -> []any or []interface{} (before go 1.18 when generic was not defined)
+- object -> map[string]any, struct
+
+encoding/JSON API
+
+- JSON -> io.Reader -> Go: json.Decoder
+- JSON -> []byte -> Go: json.Unmarshal
+- GO -> io.Wrtier -> json: json.Encoder
+- GO -> []byte -> json: json.Marshal
+
+
