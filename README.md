@@ -90,4 +90,4 @@ encoding/JSON API
 
 - to group the interface we need to be explicit i.e if interface is implemented via pointer sematinc grouping will going to have pointer value if implemented via value semantics we need to group it as value not by referance 
 
-
+- There is a rule of thum in go accepts interfaces and return types not always applied but yeah
