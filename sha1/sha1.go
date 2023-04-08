@@ -7,10 +7,16 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 )
 
 func main() {
 	sig, err := sha1sum("http.log.gz")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(sig)
+	sig, err = sha1sum("sha1.go")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -24,9 +30,12 @@ func sha1sum(filename string) (string, error) {
 		return "", err
 	}
 	defer file.Close()
-	r, err := gzip.NewReader(file)
-	if err != nil {
-		return "", err
+	var r io.Reader = file
+	if strings.HasSuffix(filename, "gz") {
+		r, err = gzip.NewReader(file)
+		if err != nil {
+			return "", err
+		}
 	}
 	w := sha1.New()
 	if _, err := io.Copy(w, r); err != nil {
