@@ -60,3 +60,24 @@ encoding/JSON API
 - slicing operation slice[start:end] including start excluding end
 
 - for tricks on slice you can check [this](https://ueokande.github.io/go-slice-tricks/)
+## Struct
+
+- Go compile does escape analysis and if we are returning a pointer then it will create it on heap
+
+- Go build ``` go build gcflags=-m ``` to see the escape analysis done by compiler
+
+- ``` go clean ``` clean all the previous go build
+
+- we can add receiver to the struct and create a method receiver act similar to this of other langauge but we have to type of recievers value and pointer so pointer receiver change the original value and value receivers do not
+
+- if we want to move the struct around use pointer receivers else use value receivers 
+
+- we should never mix receivers type once it is defined as value type throught the code it should be value type this should be decided during desinging of struct else mix receivers cause integrity issue in the code but there is one exception to it i.e marshalling and unmarshelling shloud be of pointer receivers even tough we desided to go with value type receivers
+
+- struct can embed another struct by doing so we can directly access the mothod/value to the parent struct
+
+- If parent struct and embeded struct have same method then it will be overriden by parent struct but you can  access it via ``` parent.nestedStruct.CommonMethod``` will call the parent one only
+
+- If 2 field are embeded in a struct and both have common key/field then if we try to access parent.CommonKey will give comiple time error and compiler do not konw from which struct we need to pick CommonKey
+
+- Embeding is not inheritance if want to know more look for inheritance vs embedding
