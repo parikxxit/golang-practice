@@ -53,4 +53,10 @@ encoding/JSON API
 
 - if any interface provide close method its good practice to close it using defer
 
+## Slice
 
+- len -> to get the len of a slice and len is nil safe i.e for nil slice len is 0
+
+- slicing operation slice[start:end] including start excluding end
+
+- for tricks on slice you can check [this](https://ueokande.github.io/go-slice-tricks/)
