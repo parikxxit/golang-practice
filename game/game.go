@@ -36,7 +36,34 @@ func main() {
 	}
 
 	moveAll(ms, 0, 0) // move all ms player or item to starting pos i.e 0,0
+	k := Jade
+	fmt.Print(k)
+	p1.FoundKeys(Jade)
+	fmt.Printf("%#v", p1)
 }
+
+// To write a string representation of a const
+func (k Key) String() string {
+	switch k {
+	case Jade:
+		return "Jade"
+	case Copper:
+		return "Copper"
+	case Crystal:
+		return "Crystal"
+	}
+	return fmt.Sprintf("Key -%d", k)
+	// return fmt.Sprintf("Key -%s", k)	%s will not work coz it will be recursive call to stirng to get the %s format giving stack overflow error
+}
+
+// iota is go's way of writing enum
+const (
+	Jade Key = iota + 1
+	Copper
+	Crystal
+)
+
+type Key byte
 
 func moveAll(ms []mover, x, y int) {
 	for _, m := range ms {
@@ -51,6 +78,25 @@ type mover interface {
 type Player struct {
 	Name string
 	Item // Item is embeded inside player
+	Keys []Key
+}
+
+func (p *Player) FoundKeys(k Key) error {
+	switch k {
+	case Jade, Copper, Crystal:
+		var found bool
+		for _, key := range p.Keys {
+			if key == k {
+				found = true
+				break
+			}
+		}
+		if !found {
+			p.Keys = append(p.Keys, k)
+		}
+		return nil
+	}
+	return fmt.Errorf("Key not present in game")
 }
 
 func (i *Item) Move(x, y int) {
