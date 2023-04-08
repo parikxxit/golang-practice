@@ -81,3 +81,13 @@ encoding/JSON API
 - If 2 field are embeded in a struct and both have common key/field then if we try to access parent.CommonKey will give comiple time error and compiler do not konw from which struct we need to pick CommonKey
 
 - Embeding is not inheritance if want to know more look for inheritance vs embedding
+
+## Interface
+
+- To group different type of struct/data by what it does we define an interface for it
+
+- Its convention/good practice in go to make interface small usually 2 or less then 2 methods are there in go standard lib
+
+- to group the interface we need to be explicit i.e if interface is implemented via pointer sematinc grouping will going to have pointer value if implemented via value semantics we need to group it as value not by referance 
+
+
