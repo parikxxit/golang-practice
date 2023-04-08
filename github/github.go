@@ -1,10 +1,10 @@
 package main
 
 import (
-	"io"
+	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -16,7 +16,18 @@ func main() {
 	if resp.StatusCode != http.StatusOK {
 		log.Fatalf("error := %s", resp.StatusCode)
 	}
-	if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
-		log.Fatalf("error: cant copy %s", err)
+	// if _, err := io.Copy(os.Stdout, resp.Body); err != nil {
+	// log.Fatalf("error: cant copy %s", err)
+	// }
+	var r Replay
+	dec := json.NewDecoder(resp.Body)
+	if err := dec.Decode(&r); err != nil {
+		log.Fatalf("Unabl decode %s", err)
 	}
+	fmt.Printf("%#v\n", r)
+}
+
+type Replay struct {
+	Name         string
+	Public_Repos int
 }
