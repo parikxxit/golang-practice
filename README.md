@@ -105,3 +105,22 @@ encoding/JSON API
 
 - Use recover() to detect panic in a method but if we want to return the error also instead if sending/Logging the error we can to it by giving name to return type
 
+### maps regex and files
+
+- In go we have strings("") and we also have raw string (``) in raw string no need to escaping and we can also create multiline string using raw string
+
+- Global variable compile before main so avoide using it until and unless its a design decesion also defining regex as a global also an exception
+
+- init() fxn are also the fun which run before main
+
+- Regular expression use raw string syntax as there are lot of char that may need to escape so to avoide that
+
+- Always comment a example in your regular expression 
+
+- Always comment on map type for ex: var stock map[string]float64 // stock symbol -> price
+
+- To determine difference b/w zero value or missing value use val, ok syntax in map
+
+- When we read the value from nil map its ok (i.e var m map[T1]T2 is a nil initialization of map) but when we write to it; it will panic to initialize we can use make or use litral defination 
+
+- Use newBufferScanner to scan a line from a file it behaves like an iterator
