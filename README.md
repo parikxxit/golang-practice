@@ -99,3 +99,9 @@ encoding/JSON API
 - go's ``` staticcheck ``` and ``` go vet ``` use to do the code analysis
 
 - go test run go vet before running go test 
+
+
+## Panics
+
+- Use recover() to detect panic in a method but if we want to return the error also instead if sending/Logging the error we can to it by giving name to return type
+
