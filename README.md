@@ -124,3 +124,27 @@ encoding/JSON API
 - When we read the value from nil map its ok (i.e var m map[T1]T2 is a nil initialization of map) but when we write to it; it will panic to initialize we can use make or use litral defination 
 
 - Use newBufferScanner to scan a line from a file it behaves like an iterator
+
+## Concurrency
+
+- To invoke a goroutine we use keyword ``` go ``` and once its invoked its on its own go will not wait for it to complete i.e if main goroutine exits it does not care about other goroutine
+
+- If we are looping and inside loop we are calling a gorouitine then the clouser var value that it will take of iterator i will be same if no wait group is used one fix is use a parameter in goroutine there are 2 fix available use pass a parameter to the go routine or make a showed variable of iterator 
+
+- Goroutine use channels to communicate and there are 2 operation on channel send and receive ch <- "hi" // send or msg := <-ch // receive
+
+### Channel Semantics
+
+- Channels are not queue
+- Go routine generate the message and main method consume
+- Doing a range on channel go do not know how many channel will come you need to tell channel that some thing is not coming you can do it by closing a channel
+- Channels are one directional and use to communicate b/w go routine
+- send & receive will block until opposite operation (*)
+	- Buffered channel has cap(ch) non-blocking sends
+- receive from a closed channel will return the zero value without blocking
+- send to a closed channel will panic
+- closing a closed channel will panic
+- send/receive to a nil channel will block forever
+- Receving from close channel will give its zero value and to find its a zero value of user enter zero value use val, ok := <- some chan syntax
+
+See also https://www.353solutions.com/channel-semantics
