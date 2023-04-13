@@ -83,18 +83,35 @@ func main() {
 
 	start := time.Now()
 	ok := true
+	ch := make(chan sigInfo)
 	for name, signature := range sigs {
-		fileName := path.Join(rootDir, name) + ".bz2"
-		sig, err := fileSig(fileName)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "error: %s - %s\n", fileName, err)
-			ok = false
+		go func() {
+			var res sigInfo
+			fileName := path.Join(rootDir, name) + ".bz2"
+			sig, err := fileSig(fileName)
+			res.filename = fileName
+			res.originalSig = signature
+			res.generatedSig = sig
+			if err != nil {
+				ok = false
+				ch <- res
+				res.err = err
+				return
+			}
+			ch <- res
+			if sig != signature {
+				ok = false
+			}
+		}()
+	}
+	for range sigs {
+		val := <-ch
+		if val.err != nil {
+			fmt.Fprintf(os.Stderr, "error: %s - %s\n", val.filename, val.err)
 			continue
 		}
-
-		if sig != signature {
-			ok = false
-			fmt.Printf("error: %s mismatch\n", fileName)
+		if val.originalSig != val.generatedSig {
+			fmt.Printf("error: %s mismatch\n", val.filename)
 		}
 	}
 
@@ -103,4 +120,11 @@ func main() {
 	if !ok {
 		os.Exit(1)
 	}
+}
+
+type sigInfo struct {
+	filename     string
+	err          error
+	generatedSig string
+	originalSig  string
 }
