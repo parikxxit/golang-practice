@@ -148,3 +148,13 @@ encoding/JSON API
 - Receving from close channel will give its zero value and to find its a zero value of user enter zero value use val, ok := <- some chan syntax
 
 See also https://www.353solutions.com/channel-semantics
+
+### Sync and mutex
+
+- this is alos a primitve type but provided as a package
+- we've errorgroup package in external go package can be used if only error is something we return in our concurrent design
+- sync.Once adding it to struct will help us to run cetrain method only once this process also k/as idempotence
+- go run -race will log warning 
+	- why it does not there by default by we need to add the answer is -race is very slow it affect performance 5-10 times but while testing we use -race
+- sync/atomic is lower level mutex it can provide operation like atomic.AddInt64(&val, valToAdd) and it will be perfom under proper lock like we do for mutex its just more lower level primitve type
+- 

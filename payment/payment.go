@@ -23,7 +23,7 @@ func (p *Payment) process(t time.Time) {
 
 func (p *Payment) Process() {
 	t := time.Now()
-	p.once.Do(func() { p.process(t) })
+	p.once.Do(func() { p.process(t) }) // HERE do only accepts fxn with no parameter to pass our fxn which takes parameter we need to wrap it around anonymus fnx and use clouser var value as parameter
 }
 
 type Payment struct {
