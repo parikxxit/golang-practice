@@ -157,4 +157,4 @@ See also https://www.353solutions.com/channel-semantics
 - go run -race will log warning 
 	- why it does not there by default by we need to add the answer is -race is very slow it affect performance 5-10 times but while testing we use -race
 - sync/atomic is lower level mutex it can provide operation like atomic.AddInt64(&val, valToAdd) and it will be perfom under proper lock like we do for mutex its just more lower level primitve type
-- 
+- If a common value is shared and wrtten under various go routine use mutext 

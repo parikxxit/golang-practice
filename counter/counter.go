@@ -3,6 +3,7 @@ package main
 import "sync"
 
 func main() {
+	var mu sync.Mutex
 	count := 0
 	const n = 10
 	var wg sync.WaitGroup
@@ -11,7 +12,9 @@ func main() {
 		go func() {
 			defer wg.Done()
 			for j := 0; j < 10_000; j++ {
+				mu.Lock()
 				count++
+				mu.Unlock()
 			}
 		}()
 	}
