@@ -55,12 +55,42 @@ func main() {
 	}
 	msg := <-ch // Channel is closed
 	fmt.Printf("value of closed channel is #%v", msg)
-	var ok bool
-	msg, ok = <-ch
-	if !ok {
-		fmt.Printf("Channel is closed\n")
-	} else {
-		fmt.Println(msg)
-	}
+	/*
+		var ok bool
+		msg, ok = <-ch
+		if !ok {
+			fmt.Printf("Channel is closed\n")
+		} else {
+			fmt.Println(msg)
+		}
+	*/
 	time.Sleep(10 * time.Millisecond)
+
+	sample := []int{3, 5, 1, 2, 9, 7}
+	sortedSample := sleepSort(sample)
+	fmt.Println(sortedSample)
+}
+
+/*
+For every value "n" in values, spin a goroutine that will
+- sleep "n" milliseconds
+- Send "n" over a channel
+
+In the function body, collect values from the channel to a slice and return it.
+*/
+func sleepSort(values []int) []int {
+	vCh := make(chan int)
+	for _, val := range values {
+		val := val
+		go func() {
+			time.Sleep(time.Duration(val) * time.Millisecond)
+			vCh <- val
+		}()
+	}
+	var res []int
+	for range values {
+		n := <-vCh
+		res = append(res, n)
+	}
+	return res
 }
