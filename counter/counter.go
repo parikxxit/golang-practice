@@ -1,6 +1,9 @@
 package main
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 func main() {
 	var mu sync.Mutex
@@ -20,4 +23,5 @@ func main() {
 	}
 	wg.Wait()
 	// The above code will have race condition and give different result everytime u run it
+	fmt.Println(count)
 }
