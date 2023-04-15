@@ -158,3 +158,14 @@ See also https://www.353solutions.com/channel-semantics
 	- why it does not there by default by we need to add the answer is -race is very slow it affect performance 5-10 times but while testing we use -race
 - sync/atomic is lower level mutex it can provide operation like atomic.AddInt64(&val, valToAdd) and it will be perfom under proper lock like we do for mutex its just more lower level primitve type
 - If a common value is shared and wrtten under various go routine use mutext 
+- If multiple go routine is there then we can use select to select the first channel 
+- We use timeout in select via time.After(5*time.Second) to perform time out if no channel receive anything whithin certain time
+- To block a code we can use ``` for{} ``` it will run infinitly but it consumes cpu what we can also do is run a go routine and call ``` select{} ``` it will also block forever but it wont consume cpu
+- Most common case for select is for timeout anc cancellation 
+- We can also use cotnext timeouts
+- Context are pass down and context are created from context so context.Background is used as a starting context
+- Context.Timeout used for timeout operation over select
+- Context need to pass around everytime 
+- Context also has key value 
+- Use buffer channel to avoide go routine leak as select will going to select one channel but remaining go rouitine will run causing go routine leak so to avoide use buffer bit chanel should have size of 1 buffer or it sohuld have to be unbuffer
+- Everytime we do a network operation we should use context and specially with timeout
